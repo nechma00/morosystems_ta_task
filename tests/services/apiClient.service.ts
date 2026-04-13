@@ -9,8 +9,13 @@ export class ApiClient {
     this.context = context;
   }
 
-  static async create(url: string = `${process.env.API_URL}` || 'https://localhost:8080/'): Promise<ApiClient> {
-    const context = await request.newContext({ baseURL: url });
+  static async create(url?: string): Promise<ApiClient> {
+    const baseURL = url ?? process.env.API_URL;
+    if (!baseURL) {
+      throw new Error('Missing API_URL environment variable required by ApiClient.create().');
+    }
+
+    const context = await request.newContext({ baseURL });
     return new ApiClient(context);
   }
 

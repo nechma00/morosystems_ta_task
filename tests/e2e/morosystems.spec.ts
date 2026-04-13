@@ -59,6 +59,8 @@ for (const viewport of viewports) {
         await test.step('navigate to Morosystems website', async () => {
             await morosystemsPage.page.setViewportSize(viewport.size);
             await morosystemsPage.open();
+            await morosystemsPage.selectLanguage('cz');
+            await morosystemsPage.acceptCookies();
         });
 
         await test.step(`assert homepage visuals on ${viewport.name}`, async () => {

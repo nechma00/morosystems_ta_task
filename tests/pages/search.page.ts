@@ -17,7 +17,12 @@ export class SearchPage {
   }
 
   async open(): Promise<void> {
-    await this.page.goto(`${process.env.BASE_URL}`);
+    const baseUrl = process.env.BASE_URL;
+    if (!baseUrl) {
+      throw new Error('Missing BASE_URL environment variable required by SearchPage.open().');
+    }
+
+    await this.page.goto(baseUrl);
   }
 
   getSearchResultByText(text: string): { searchResultContainer: Locator; searchResultLink: Locator; searchResultHeader: Locator } {

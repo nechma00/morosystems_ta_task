@@ -33,8 +33,6 @@ export class MorosystemsPage {
 
   async open(): Promise<void> {
     await this.page.goto(this.url);
-    await this.selectLanguage('cz');
-    await this.acceptCookies();
   };
 
   async navigateToKariera(): Promise<void> {
