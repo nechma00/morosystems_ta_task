@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/base.fixture';
 import { readFileSync } from 'fs';
 import path from 'path';
 
-test.only("should navigate to Morosystems website and filter open positions", async ({ searchPage, morosystemsPage }) => {
+test("should navigate to Morosystems website and filter open positions", async ({ searchPage, morosystemsPage }) => {
     let morosystemsResult: ReturnType<typeof searchPage.getSearchResultByText>;
     await test.step('open search engine and search for Morosystems', async () => {
         await searchPage.open();

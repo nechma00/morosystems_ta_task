@@ -29,7 +29,13 @@ jobs:
         run: npm ci
 
       - name: Install backend dependencies
-        run: npm ci --prefix todo-be
+        run: |
+          if [ -f todo-be/package-lock.json ]; then
+            npm ci --prefix todo-be
+          else
+            echo "todo-be/package-lock.json not found, falling back to npm install"
+            npm install --prefix todo-be
+          fi
 
       - name: Start backend
         run: npm --prefix todo-be run start &
