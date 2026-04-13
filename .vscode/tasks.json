@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Playwright Tests",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"playwright",
+				"test"
+			],
+			"isBackground": false,
+			"group": "test"
+		}
+	]
+}
