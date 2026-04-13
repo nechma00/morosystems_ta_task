@@ -1,6 +1,6 @@
-import { ApiClient } from './apiClient.service';
+import type { ApiClient } from './apiClient.service';
 import { endpoints } from './endpoints';
-import { CreateTask, UpdateTask } from './types/types';
+import type { CreateTask, UpdateTask } from './types/types';
 
 export class TasksService {
   private readonly client: ApiClient;

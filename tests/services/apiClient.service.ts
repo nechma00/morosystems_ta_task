@@ -1,5 +1,5 @@
 import { type APIRequestContext, expect, request } from '@playwright/test';
-import { Task } from './types/types';
+import type { Task } from './types/types';
 
 export class ApiClient {
   private readonly context: APIRequestContext;
