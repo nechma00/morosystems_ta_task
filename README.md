@@ -72,7 +72,7 @@ Run one e2e spec:
 npx playwright test tests/e2e/morosystems.spec.ts
 ```
 
-Run only visual tests (tagged with `@visual`):
+Run only visual tests (tagged with `@visual`) on the canonical project:
 
 ```bash
 npm run test:visual
@@ -82,16 +82,16 @@ npm run test:visual
 
 E2e tests use `toHaveScreenshot` for visual regression. Baseline snapshots are stored under `tests/e2e/morosystems.spec.ts-snapshots/`.
 
-Generate or update baseline snapshots:
+Generate or update baseline snapshots (canonical project):
 
 ```bash
-npx playwright test tests/e2e --update-snapshots
+npx playwright test --project=chromium-visual --update-snapshots
 ```
 
-Update snapshots for a single spec:
+Update snapshots for a single spec (canonical project):
 
 ```bash
-npx playwright test tests/e2e/morosystems.spec.ts --update-snapshots
+npx playwright test tests/e2e/morosystems.spec.ts --project=chromium-visual --update-snapshots
 ```
 
 After updating, review the diff in the Playwright HTML report before committing the new baselines:
@@ -105,7 +105,7 @@ npx playwright show-report
 - `npm run test:ui` starts Playwright UI mode
 - `npm run test:headed` runs tests in headed browser mode
 - `npm run test:debug` runs tests in debug mode
-- `npm run test:visual` runs only tests tagged with `@visual`
+- `npm run test:visual` runs visual tests only on the `chromium-visual` project
 - `npm run lint` runs ESLint static analysis
 - `npm run lint:fix` runs ESLint and applies fixes
 - `npm run codegen` opens Playwright codegen

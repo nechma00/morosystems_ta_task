@@ -4,7 +4,7 @@
   "description": "Playwright + TypeScript test repository for MoroSystems TA task",
   "scripts": {
     "test": "playwright test",
-    "test:visual": "playwright test --grep @visual",
+    "test:visual": "playwright test --project=chromium-visual",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",

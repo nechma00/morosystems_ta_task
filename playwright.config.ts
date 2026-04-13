@@ -38,17 +38,26 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      grepInvert: /@visual/,
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
+      grepInvert: /@visual/,
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
+      grepInvert: /@visual/,
       use: { ...devices['Desktop Safari'] },
+    },
+
+    {
+      name: 'chromium-visual',
+      grep: /@visual/,
+      use: { ...devices['Desktop Chrome'] },
     },
 
     /* Test against mobile viewports. */
