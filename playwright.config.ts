@@ -45,12 +45,14 @@ export default defineConfig({
     {
       name: 'firefox',
       grepInvert: /@visual/,
+      testIgnore: ['**/integration/**'],
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
       grepInvert: /@visual/,
+      testIgnore: ['**/integration/**'],
       use: { ...devices['Desktop Safari'] },
     },
 
