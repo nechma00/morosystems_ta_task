@@ -8,9 +8,12 @@ export class MorosystemsPage {
   readonly locationDropdown: Locator;
   readonly positionRow: Locator;
   readonly openPositionsHeading: Locator;
+  readonly cookiesModal: Locator;
   readonly acceptCookiesButton: Locator;
+  readonly menuButton: Locator;
   // Constants
   readonly url: string;
+  readonly karieraUrl: string;
 
   constructor(page: Page) {
     // Initialize locators and constants
@@ -20,20 +23,29 @@ export class MorosystemsPage {
     this.locationDropdown = page.getByRole('link', { name: 'Všechna města' });
     this.positionRow = page.locator('[data-event-category="Pozice"]');
     this.openPositionsHeading = page.locator("#pozice").getByRole('heading');
+    this.cookiesModal = page.locator('#cookiescript_injected');
     this.acceptCookiesButton = page.getByRole('button', { name: 'Přijmout vše' });
+    this.menuButton = page.getByLabel("Menu");
     // constants values
     this.url = 'https://www.morosystems.com/';
+    this.karieraUrl = "https://www.morosystems.cz/kariera/";
   }
 
   async open(): Promise<void> {
     await this.page.goto(this.url);
-  }
+    await this.selectLanguage('cz');
+    await this.acceptCookies();
+  };
+
+  async navigateToKariera(): Promise<void> {
+    await this.page.goto(this.karieraUrl);
+  };
 
   async selectLocation(location: string): Promise<void> {
     await this.locationDropdown.click();
     const locationOption = this.page.locator('label').filter({ hasText: location });
     await locationOption.click();
-  }
+  };
 
     async selectLanguage(language: string): Promise<void> {
     await this.languageSelector.click();
@@ -42,10 +54,10 @@ export class MorosystemsPage {
   };
 
   async acceptCookies(): Promise<void> {
-    await this.acceptCookiesButton.click({timeout: 5000}).catch(() => {/* ignore if not visible */});
-  }
+    await this.acceptCookiesButton.click();
+  };
 
   getPositionByTitle(title: string): Locator {
     return this.page.getByRole('link', { name: title });
-  }
+  };
 }

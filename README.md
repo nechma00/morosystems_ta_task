@@ -72,11 +72,40 @@ Run one e2e spec:
 npx playwright test tests/e2e/morosystems.spec.ts
 ```
 
+Run only visual tests (tagged with `@visual`):
+
+```bash
+npm run test:visual
+```
+
+## Visual snapshot testing
+
+E2e tests use `toHaveScreenshot` for visual regression. Baseline snapshots are stored under `tests/e2e/morosystems.spec.ts-snapshots/`.
+
+Generate or update baseline snapshots:
+
+```bash
+npx playwright test tests/e2e --update-snapshots
+```
+
+Update snapshots for a single spec:
+
+```bash
+npx playwright test tests/e2e/morosystems.spec.ts --update-snapshots
+```
+
+After updating, review the diff in the Playwright HTML report before committing the new baselines:
+
+```bash
+npx playwright show-report
+```
+
 ## Useful scripts
 
 - `npm run test:ui` starts Playwright UI mode
 - `npm run test:headed` runs tests in headed browser mode
 - `npm run test:debug` runs tests in debug mode
+- `npm run test:visual` runs only tests tagged with `@visual`
 - `npm run lint` runs ESLint static analysis
 - `npm run lint:fix` runs ESLint and applies fixes
 - `npm run codegen` opens Playwright codegen

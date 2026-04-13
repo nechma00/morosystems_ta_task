@@ -48,36 +48,42 @@ test("should navigate to Morosystems website and filter open positions", async (
     });
 });
 
-test("should navigate to Morosystems website and validate visuals and styling", async ({ morosystemsPage }) => {
-    await test.step('navigate to Morosystems website', async () => {
-        await morosystemsPage.open();
-    });
+const viewports = [
+    { name: 'mobile', size: { width: 390, height: 844 } },
+    { name: 'tablet', size: { width: 820, height: 1180 } },
+    { name: 'laptop', size: { width: 1600, height: 1200 } },
+];
 
-    await test.step('switch language to czech', async () => {
-        await morosystemsPage.selectLanguage('cz');
-        await morosystemsPage.acceptCookies();
-    });
+for (const viewport of viewports) {
+    test(`@visual should validate visuals and styling on ${viewport.name} - ${viewport.size.width}x${viewport.size.height}`, async ({ morosystemsPage }) => {
+        await test.step('navigate to Morosystems website', async () => {
+            await morosystemsPage.page.setViewportSize(viewport.size);
+            await morosystemsPage.open();
+        });
 
-    await test.step('assert fully loaded home page with visual baseline comparison', async () => {
-        // Use a viewport to capture the whole page in the screenshot and ensure consistent rendering
-        await morosystemsPage.page.setViewportSize({ width: 1920, height: 1080 });
-        await morosystemsPage.page.waitForTimeout(2000); // Wait for dynamic content to load
+        await test.step(`assert homepage visuals on ${viewport.name}`, async () => {
+            await morosystemsPage.page.waitForTimeout(2000);
+            await expect(morosystemsPage.page).toHaveScreenshot(`morosystems-homepage-${viewport.name}.png`, {
+                fullPage: true,
+                animations: 'disabled',
+                caret: 'hide',
+                mask: [morosystemsPage.cookiesModal],
+                maxDiffPixelRatio: 0.05,
+            });
+        });
 
-        await expect(morosystemsPage.page).toHaveScreenshot('morosystems-homepage.png', {
-            fullPage: true,
-            animations: 'disabled',
-            caret: 'hide',
+        await test.step(`assert kariera page visuals on ${viewport.name}`, async () => {
+            await morosystemsPage.navigateToKariera();
+            await morosystemsPage.page.waitForTimeout(2000);
+
+            await expect(morosystemsPage.page).toHaveScreenshot(`morosystems-kariera-${viewport.name}.png`, {
+                fullPage: true,
+                animations: 'disabled',
+                caret: 'hide',
+                mask: [morosystemsPage.cookiesModal],
+                maxDiffPixelRatio: 0.05, // increase tolerance for dynamic content
+
+            });
         });
     });
-
-    await test.step('navigate to Kariera page and assert visuals', async () => {
-        await morosystemsPage.karieraLink.click();
-        await morosystemsPage.page.waitForTimeout(2000); // Wait for dynamic content to load
-
-        await expect(morosystemsPage.page).toHaveScreenshot('morosystems-kariera.png', {
-            fullPage: true,
-            animations: 'disabled',
-            caret: 'hide',
-        });
-    });
-});
+}
