@@ -32,8 +32,11 @@ test("should navigate to Morosystems website and filter open positions", async (
 
     await test.step('select czech language', async () => {
         await morosystemsPage.selectLanguage('cz');
+    });
+    await test.step('accept cookies', async () => {
         await morosystemsPage.acceptCookies();
     });
+
     await test.step('navigate to Kariera page', async () => {
         await morosystemsPage.karieraLink.click();
         await expect(morosystemsPage.openPositionsHeading).toContainText("Koho hledáme");

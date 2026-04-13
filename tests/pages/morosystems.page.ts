@@ -52,7 +52,13 @@ export class MorosystemsPage {
   };
 
   async acceptCookies(): Promise<void> {
-    await this.acceptCookiesButton.click();
+    await this.acceptCookiesButton
+      .waitFor({ state: 'visible', timeout: 5000 })
+      .catch(() => null);
+
+    if (await this.acceptCookiesButton.isVisible()) {
+      await this.acceptCookiesButton.click();
+    }
   };
 
   getPositionByTitle(title: string): Locator {
